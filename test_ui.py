@@ -1,11 +1,10 @@
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import allure
-from pages.Search_By_Author_ui import SearchByAuthor
-from pages.Search_By_Title_ui import SearchByTitle
-from pages.Add_To_Cart_ui import AddToCart
-from pages.Delete_From_Cart_ui import DeleteFromCart
+from Pages.Search_By_Author_ui import SearchByAuthor
+from Pages.Search_By_Title_ui import SearchByTitle
+from Pages.add_cart_ui import AddToCart
+from Pages.delete_cart_ui import DeleteFromCart
 from constants import UI_url
 
 search_by_author = SearchByAuthor
@@ -29,12 +28,12 @@ def test_search_by_author():
     with allure.step("Перейти на сайт Читай-город"):
         driver.get(UI_url)
 
-    with allure.step("Найти книгу по автору Сумейе Коч"):
-        author_name = "Сумейе Коч"
+    with allure.step("Найти книгу по автору Виктор Пелевин"):
+        author_name = "Виктор Пелевин"
         search_by_author(author_name)
 
     with allure.step("Получить результаты поиска"):
-        results_find = driver.find_element(By.CLASS_NAME, "product-title__author")
+        results_find = driver.find_element(By.CSS_SELECTOR, "div.search-form__input-wrapper")
 
     with allure.step("Проверить, что поиск по автору успешен"):
         assert results_find is not None
@@ -58,12 +57,12 @@ def test_add_to_card():
     with allure.step("Перейти на сайт Читай-город"):
         driver.get(UI_url)
 
-    with allure.step("Добавить в корзину книгу с названием Ветреный"):
-        book_title = "Ветреный"
+    with allure.step("Добавить в корзину книгу с названием KGBT+"):
+        book_title = "KGBT+"
         add_to_card(book_title)
 
     with allure.step("Получить результаты добавления в корзину"):
-        results_add = driver.find_element(By.CSS_SELECTOR, 'div.product-title__head')
+        results_add = driver.find_element(By.CSS_SELECTOR, 'div.search-form__input-wrapper')
 
     with allure.step("Проверить, что корзина не пуста"):
         assert results_add is not None

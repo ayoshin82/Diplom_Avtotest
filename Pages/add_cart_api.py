@@ -6,7 +6,7 @@ from constants import API1_url, bearer_token
 
 
 @allure.description("Тестирование добавления товара в корзину на сайте Читай-город.")
-class AddToCartAPI:
+class AddCartAPI:
     """Класс для работы с API добавления товара в корзину."""
 
     url = API1_url  # URL для добавления товара в корзину
@@ -20,6 +20,13 @@ class AddToCartAPI:
         self.headers = {
             'Content-Type': 'application/json',  # Установка типа контента
             'Authorization': bearer_token  # Установка токена для авторизации
+        }
+
+        self.headers = {
+            'Content-Type': 'application/json',
+            'Authorization': bearer_token,
+            'User-Agent': 'Mozilla/5.0',  # Добавить User-Agent
+            'Accept': 'application/json'  # Добавить Accept
         }
 
     def add_product_to_cart(self, product_id: int, item_list_name: str) -> int:

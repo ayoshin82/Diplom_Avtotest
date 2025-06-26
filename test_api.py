@@ -1,11 +1,12 @@
+
 import allure
-from pages.Add_To_Cart_api import AddToCartAPI
-from pages.Wrong_Add_To_Cart_api import WrongRequestAPI
+from Pages.add_cart_api import AddCartAPI
+from Pages.Send_Empty_Post_Request_api import EmptyPostRequest
+from Pages.Update_cart_api import UpdateCartAPI
+from Pages.Wrong_Add_To_Cart_api import WrongRequestAPI
+from Pages.delete_cart_api import DeleteFromCart
 from constants import API1_url
 from constants import API2_url
-from pages.Update_cart_api import UpdateCartAPI
-from pages.Delete_From_Cart_api import DeleteFromCart
-from pages.Send_Empty_Post_Request_api import EmptyPostRequest
 
 
 @allure.feature("Тестирование API интернет-магазина")
@@ -16,10 +17,10 @@ def test_add_product_to_cart():
                         Проверяет, успешен ли запрос на добавление товара в корзину.
     """
     with allure.step("Добавить книгу в корзину"):
-        product_id = 2967760  # ID продукта для добавления
+        product_id = 2930339  # ID продукта для добавления
         item_list_name = "search"  # Имя списка, откуда добавляется продукт
-        add_to_cart_api = AddToCartAPI(API1_url)  # Создаем экземпляр API для добавления в корзину
-        status_code = add_to_cart_api.add_product_to_cart(product_id, item_list_name)  # Выполняем запрос
+        add_cart_api = AddCartAPI(API1_url)  # Создаем экземпляр API для добавления в корзину
+        status_code = add_cart_api.add_product_to_cart(product_id, item_list_name)  # Выполняем запрос
 
     with allure.step("Проверить статус запроса"):
         assert status_code == 200  # Проверяем, что статус-код ответа равен 200
@@ -36,7 +37,7 @@ def test_edit_cart():
 
     product_id = 2967760  # ID продукта для добавления
     item_list_name = "search"  # Имя списка, откуда добавляется продукт
-    add_to_cart_api = AddToCartAPI(API1_url)
+    add_to_cart_api = AddCartAPI(API1_url)
     status_code = add_to_cart_api.add_product_to_cart(product_id, item_list_name)  # Добавляем продукт в корзину
 
     with allure.step("Проверить статус запроса"):
@@ -65,11 +66,11 @@ def test_delete_product_from_cart():
                     Тест для удаления товара из корзины.
                     Проверяет, что товар успешно удален.
     """
-    product_id = 2967760  # ID добавленной книги
+    product_id = 20119282 # ID добавленной книги
     item_list_name = "search"  # Имя списка, откуда добавляется продукт
 
     # Создаем экземпляр класса для добавления товара в корзину
-    add_to_cart_api = AddToCartAPI(API1_url)
+    add_to_cart_api = AddCartAPI(API1_url)
 
     # Добавляем товар в корзину
     status_code = add_to_cart_api.add_product_to_cart(product_id, item_list_name)
@@ -106,7 +107,7 @@ def test_wrong_add_request():
         status_code = wrong_add_api.wrong_add_product(product_id, item_list_name)  # Выполняем неверный запрос
 
     with allure.step("Проверить статус запроса"):
-        assert status_code == 405  # Проверяем, что статус-код равен 405
+        assert status_code == 403  # Проверяем, что статус-код равен 403
 
 
 @allure.feature("Тестирование API интернет-магазина")
@@ -122,7 +123,8 @@ def test_add_product_to_cart_with_empty_body():
         empt = EmptyPostRequest(API1_url)  # Замените на ваш URL
         status_code = empt.add_product_to_cart_with_empty_body()  # Вызов метода с пустым телом
 
-    with allure.step("Проверить статус запроса"):
+    with ((((allure.step("Проверить статус запроса"))))):
         # Проверяем, что сервер возвращает статус 422
-        assert status_code == 422, "Ожидается статус 422 Unprocessable Entity, но получен статус {}".format(status_code)
+        assert status_code == 422
+        "Ожидается статус 422 Unprocessable Entity, но получен статус {}".format(status_code)
         

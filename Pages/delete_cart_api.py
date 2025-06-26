@@ -24,6 +24,7 @@ class DeleteFromCart:
             'Authorization': bearer_token  # Токен для авторизации
         }
 
+
     @allure.step("Получение содержимого корзины")
     def get_cart_contents(self)-> dict:
         """
